@@ -205,7 +205,7 @@
 
 #home_page{
     display: grid;
-    padding: 0px 90px;
+    padding: 0px 45px;
 }
 
 .head_section{
@@ -747,14 +747,12 @@
     display: grid;
     grid-template-rows: 1fr;
     grid-gap: 10px;
-    padding: 20px;
 }
 
 .category_card{
     height:75vh;
     grid-template-rows: 50px 1fr;
     border-radius: 7px;
-    border: solid 1px #a4a4a4;
     position: fixed;
     max-width: 245px;
 }
@@ -762,11 +760,13 @@
 .category_name_card{
     padding: 5px;
     font-size: large;
+    cursor: pointer;
     
 }
 .sub_category_name_card{
     padding: 5px 12px;
     color: dimgrey;
+    cursor: pointer;
 }
 
 .category_name_card:hover{
