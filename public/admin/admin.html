@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+     <link rel="icon" style="width:50%;" type="image/png" href="../img/logopharma.png" />
+    <link rel="stylesheet" href="../css/admin.css" />
+    <link rel="stylesheet" href="../css/general_style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/js/swiper.min.js"></script>
+</head>
+
+<body>
+     <!--********************************* LOADING PAGE  *******************************************************-->
+    <!-- ***************************************************************************************************** -->
+
+        <div id="loading_page" class="page" data-id="loading_page">
+                <div class="loader"></div>
+    
+            </div>
+
+    <div id="admin_page">
+        <div id="sidebar" class="black">
+            <div class="profile">
+                <img src="../img/blue background stars-BH.png" alt="logo"></img>
+                
+            </div>
+           <div class="menu"> 
+            
+
+           </div>
+        </div>
+
+         <!--********************************* DASHBOARD PAGE  *******************************************************-->
+        <!-- ***************************************************************************************************** -->
+
+        <div id="main" class=" border_main_top border_main_bottom" >
+            <div class="main_content">
+                <div class="navbar shadow border_main_top">
+                    <div class="sidebar_icon">
+                        <i class="fas fa-bars icon"></i>
+                    </div>
+                    <div class="my_profile">
+                        
+                        <div class="username" id="current_user"></div>
+                        <i class="fas fa-angle-down"></i>
+                        <div class="dropdown_container shadow">
+                            <div class="dropdown_item" id="logout">
+                                <i class="fas fa-sign-out-alt icon"></i>
+                                <span class="item">Deconnexion</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div data-id="dashboard" class="main_container page border_main_bottom" id="dashboard_page">
+                    <div class="main_header">
+                        
+                            <div class="title-icon-square"><i class="fas fa-home icon text_white"></i> </div>
+                            <div class="main_header_link">Dashboard</div>
+                        
+                    </div>
+                    <div class="analysis_cards">
+                            <div class='card_info shadow orange_grad'>
+                                    <div class="card_info_content ">
+                                        <h6 class="text_color_white mb-20">Nouvelles commandes </h6>
+                                        <h3 class="mb-10"  ></h3>
+                                        <h6 class="mb-2 text_color_white" id="order_new" ></h6>
+    
+                                    </div>
+                                    <div class="card_info_icon">
+                                        <div class="card_info_icon-circle opacity_orange">
+                                            <i class="far fa-calendar-plus text_color_white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class='card_info shadow pink_grad'>
+                                    <div class="card_info_content ">
+                                        <h6 class="text_color_white mb-20">Commandes en attente </h6>
+                                        <h3 class="mb-10"   ></h3>
+                                        <h6 class="mb-2 text_color_white" id="order_attente"></h6>
+    
+                                    </div>
+                                    <div class="card_info_icon">
+                                        <div class="card_info_icon-circle opacity_orange">
+                                            <i class="fas fa-history text_color_white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class='card_info shadow blue_grad'>
+                                    <div class="card_info_content ">
+                                        <h6 class="text_color_white mb-20">Commandes en cours de livraison </h6>
+                                        <h3 class="mb-10"  ></h3>
+                                        <h6 class="mb-2 text_color_white" id="order_livraison"></h6>
+    
+                                    </div>
+                                    <div class="card_info_icon">
+                                        <div class="card_info_icon-circle opacity_blue">
+                                            <i class="fas fa-truck text_color_white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='card_info shadow purple_grad'>
+                                        <div class="card_info_content ">
+                                                <h6 class="text_color_white mb-20 ">Commandes confirmées </h6>
+                                                <h3 class="mb-10"  ></h3>
+                                                <h6 class="mb-2 text_color_white" id="order_accepted" ></h6>
+            
+                                            </div>
+                                            <div class="card_info_icon">
+                                                <div class="card_info_icon-circle opacity_success">
+                                                    <i class="fas fa-check-circle text_color_white"></i>
+                                                </div>
+                                            </div>
+                                </div>
+                                
+                                
+                    </div>
+                    <div class='card_container'>
+                        <div class='card_analytics shadow'>
+                            <div id="chartdiv"></div>
+                        </div>
+                        <div class='card_group'>
+                            <div class='card_info shadow'>
+                                <div class="card_info_content ">
+                                    <h5 class="text_muted mb-20">Clients</h5>
+                                    <h3 class="mb-10" ></h3>
+                                    <h4 class="mb-2 text_color_blue" id="user_num"></h4>
+
+                                </div>
+                                <div class="card_info_icon">
+                                    <div class="card_info_icon-circle opacity_blue">
+                                        <i class=" fas fa-users text_color_blue"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='card_info shadow'>
+                                    <div class="card_info_content ">
+                                            <h5 class="text_muted mb-20 ">Commandes</h5>
+                                            <h3 class="mb-10" ></h3>
+                                            <h4 class="mb-2 text_color_success" id="order_num"></h4>
+        
+                                        </div>
+                                        <div class="card_info_icon">
+                                            <div class="card_info_icon-circle opacity_success">
+                                                <i class="fas fa-shopping-bag text_color_success"></i>
+                                            </div>
+                                        </div>
+                            </div>
+                            <div class='card_info shadow'><div class="card_info_content ">
+                                    <h5 class="text_muted mb-20">Produits</h5>
+                                    <h3 class="mb-10" ></h3>
+                                    <h4 class="mb-2 text_color_orange" id="prod_num"></h4>
+
+                                </div>
+                                <div class="card_info_icon">
+                                    <div class="card_info_icon-circle opacity_orange">
+                                        <i class="fab fa-product-hunt text_color_orange"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="table_section">
+                        <div class="table_container shadow">
+                            <div class="table_container_header">
+                                <div class="table_main_title"> Nouvelles Commandes </div>
+                                
+                            </div>
+                        
+                            <div class="check_order table_head">
+                                <div id="table_title"> id-commande</div>
+                                <div id="table_title" class="date_of_order"> Date de commande </div>
+                                <div id="table_title"> Nom du client </div>
+                                <div id="table_title"> Address du client </div>
+                                <div id="table_title"> Prix Commande</div>
+                                <div id="table_title"> Statut </div>
+                                <div id="table_title"> Derniére modification </div>
+                                <div id="table_title"> Actions</div>
+                            </div>
+                            
+                            <div id="table_body_checkorder" >
+                              
+                            </div>
+                       
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+
+            <div data-id="profile_page" id="profile_page" class="page">
+                <div class="section">
+                    <div class="profile_container shadow">
+                        <div class="profile_container_header">head</div>
+                        <div class="profile_container_body">test</div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!--********************************* USER PAGE  *******************************************************-->
+            <!-- ***************************************************************************************************** -->
+
+
+            <div data-id="user_page" id="user_page" class="page">
+                <div class="section">
+                    <div class="table_section">
+                        <div class="table_container shadow">
+                            <div class="table_container_header">
+                                <div class="table_main_title" > Administrators </div>
+                                <div class="add_btn">
+                                    <div id="add_user" class="button_add primary_color"><i
+                                            class="fas fa-user-plus icon"></i>Ajouter admin</div>
+                                </div>
+
+                            </div>
+                            <div class="filter_section">
+                                    <div class="search"> 
+                                    <input type="text" id="admin_search_bar"  placeholder="Rechercher..." title="Type in a name">
+                                    </div>
+                                  </div>
+                            <div  class="user table_head">
+                                <div id="table_title"> Nom </div>
+                                <div id="table_title"> Prenom</div>
+                                <div id="table_title"> Role</div>
+                                <div id="table_title"> Username</div>
+                                <div id="table_title"> Action</div>
+                            </div>
+                            <div id="table_body_user">
+                              
+                            </div>
+                        </div>
+                    </div>
+                        </div>
+                    
+
+                </div>        
+            <!--********************************* Client PAGE  *******************************************************-->
+            <!-- ***************************************************************************************************** -->
+
+
+            <div data-id="client_page" id="client_page" class="page">
+                <div class="section">
+                    <div class="table_section">
+                        <div class="table_container shadow">
+                            <div class="table_container_header">
+                                <div class="table_main_title"> Clients </div>
+                                      <div class="add_btn">
+                                            <div class="search">
+                                                    <input type="text" id="client_search_bar"  placeholder="Rechercher..." title="Type in a name">
+                                                  </div></div>
+                            </div>
+                            <div  class="client table_head">
+                                <div id="table_title"> id </div>
+                                <div id="table_title"> Nom </div>
+                                <div id="table_title"> Prénom</div>
+                                <div id="table_title"> Adresse</div>
+                                <div id="table_title"> N° de téléphone</div>
+                            </div>
+                            <div id="table_body_client">
+                              
+                            </div>
+                        </div>
+                    </div>
+                        </div>
+                    
+
+                </div>        
+
+        <!--********************************* CATEGORY PAGE  *******************************************************-->
+        <!-- ***************************************************************************************************** -->
+        <div data-id="category_page" id="category_page" class="page">
+                <div class="section">
+                    <div class="table_section">
+                        <div class="table_container shadow">
+                            <div class="table_container_header">
+                                <div class="table_main_title"> Catégorie </div>
+                                <div class="add_btn">
+                                    <div id="add_cat" class="button_add primary_color"><i class="fas fa-plus icon"></i>Ajouter catégorie</div>
+                                </div>
+
+                            </div>
+                            <div class="filter_section">
+                                    
+                                      <div class="search"> 
+                                      <input type="text" id="category_search_bar"  placeholder="Rechercher..." title="Type in a name">
+                                      </div>
+                                    </div>
+                            <div  class="categorie table_head">
+                                <div id="table_title"> Nom de categorie </div>
+                                <div id="table_title"> Sous-categorie</div>
+                                <div id="table_title"> Actions</div>
+                            </div>
+                            <div id="table_body_cat">
+                              
+                            </div>
+                        </div>
+                    </div>
+                        </div>
+                   
+                </div>
+        
+
+
+
+        <!--********************************* PRODUCT PAGE  *******************************************************-->
+        <!-- ***************************************************************************************************** -->
+
+        <div data-id="product_page" id="product_page" class="page">
+                <div class="section">
+                    <div class="table_section">
+                        <div class="table_container shadow">
+                            <div class="table_container_header">
+                                <div class="table_main_title"> Produits </div>
+                                <div class="add_btn">
+                                    <div id="add_prod" class="button_add primary_color"> <i class="fas fa-plus icon"></i>Ajouter produit</div>
+                                </div>
+
+                            </div>
+                            <div class="filter_section">
+                                <div class="search"> 
+                                <select id="filter-select-promo" >
+                                    <option selected value="Tout" class="category-option">Tous les produits</option>
+                                    <option value="0" >Pas en promo</option>
+                                    <option value="1">En promo</option>
+                                  </select></div>
+                                  <div class="search"> 
+                                  <input type="text" id="products_search_bar"  placeholder="Rechercher..." title="Type in a name">
+                                  </div>
+                                </div>
+                            <div  class="product table_head">
+                                    <div id="table_title">
+                                    </div>
+                                    <div id="table_title"> ref</div>
+                                <div id="table_title"> Nom du produit </div>
+                                <div id="table_title"> Quantité</div>
+                                <div id="table_title"> Prix </div>
+                                <div id="table_title"> Promo </div>
+                                <div id="table_title"> Selles-index </div>
+                                <div id="table_title"> Actions</div>
+                            </div>
+                            <div id="table_body_prod">
+                              
+                            </div>
+                        </div>
+                    </div>
+                    
+                        
+                        </div>
+                </div>
+
+        <!--********************************* REDUCTION PAGE  *******************************************************-->
+        <!-- ***************************************************************************************************** -->
+
+        <div data-id="reduction_page" id="reduction_page" class="page">
+                <div class="section">
+                    <div class="table_section">
+                        <div class="table_container shadow">
+                            <div class="table_container_header">
+                                <div class="table_main_title"> Réductions </div>
+                                <div class="add_btn">
+                                    <div id="add_red" class="button_add primary_color">
+                                        <i class="fas fa-plus icon"></i>Ajouter Réduction</div>
+                                </div>
+
+                            </div>
+                            <div class="filter_section">
+                                    <div class="search"> 
+                                    <input type="text" id="red_search_bar"  placeholder="Rechercher..." title="Type in a name">
+                                    </div>
+                                  </div>
+                            <div  class="reduction table_head">
+                                <div id="table_title"> Type </div>
+                                <div id="table_title"> Nom </div>
+                                <div id="table_title"> Prix Panier</div>
+                                <div id="table_title"> Pourcentage</div>
+                                <div id="table_title"> Actions</div>
+                            </div>
+                            <div id="table_body_red">
+                              
+                            </div>
+                        </div>
+                    </div>
+                    
+                        
+                        </div>
+                </div>
+        <!--********************************* DELIVERY PAGE  *******************************************************-->
+        <!-- ***************************************************************************************************** -->
+
+        <div data-id="delivery_page" id="delivery_page" class="page">
+                <div class="section">
+                    <div class="table_section">
+                        <div class="table_container shadow">
+                            <div class="table_container_header">
+                                <div class="table_main_title"> Livraisons </div>
+                                <div class="add_btn">
+                                    <div id="add_delivery" class="button_add primary_color"> <i class="fas fa-truck icon"></i>
+                                    Ajouter Livraison</div>
+                                </div>
+
+                            </div>
+                            <div class="filter_section">
+                                    
+                                    <div class="search"> 
+                                    <input type="text" id="delivery_search_bar"  placeholder="Rechercher..." title="Type in a name">
+                                    </div>
+                                  </div>
+                            <div  class="delivery table_head">
+                                    <div id="table_title"> Nom </div>
+                                <div id="table_title"> Prix</div>
+                                <div id="table_title"> Wilaya</div>
+                                <div id="table_title"> Actions</div>
+                            </div>
+                            <div id="table_body_delivery">
+                              
+                            </div>
+                        </div>
+                    </div>
+                    
+                        
+                        </div>
+                </div>
+                
+                
+                      <!--********************************* BANNER PAGE  *******************************************************-->
+        <!-- ***************************************************************************************************** -->
+
+        <div data-id="banner_page" id="banner_page" class="page">
+                <div class="section">
+                    <div class="table_section">
+                        <div class="table_container shadow">
+                            <div class="table_container_header">
+                                <div class="table_main_title"> Banner </div>
+                                <div class="add_btn">
+                                    <div id="btn-add-banner" class="button_add primary_color"> 
+                                    Ajouter un banner</div>
+                                </div>
+
+                            </div>
+                            <div class="filter_section">
+                                    
+                                   
+                                  </div>
+                            <div  class="banner-page table_head">
+                                    <div id="table_title"> ID </div>
+                                <div id="table_title"> Photo</div>
+                                <div id="table_title"> Actions</div>
+                            </div>
+                            <div id="table_body_banner">
+                              
+                            </div>
+                        </div>
+                    </div>
+                    
+                        
+                        </div>
+                          <div id="side_menu6" class="grid row3 secondary_color7">
+                    
+                   
+                </div> 
+                </div>
+                
+                
+                
+        <!--********************************* ADS PAGE  *******************************************************-->
+        <!-- ***************************************************************************************************** -->
+
+        <div data-id="ads_page" id="ads_page" class="page">
+                <div class="section">
+                    <div class="table_section">
+                        <div class="table_container shadow">
+                            <div class="table_container_header">
+                                <div class="table_main_title"> Publicités </div>
+                                <div class="add_btn">
+                                    <div id="add_ads" class="button_add primary_color"> <i class="fas fa-ad"></i>
+                                    Ajouter Pub</div>
+                                </div>
+
+                            </div>
+                            <div  class="ads table_head">
+                                <div id="table_title"> # </div>
+                                <div id="table_title"> Nom </div>
+                                <div id="table_title"> Lien</div>
+                                <div id="table_title"> Date</div>
+                                <div id="table_title"> Statut</div>
+                                <div id="table_title"> Actions</div>
+                            </div>
+                            <div id="table_body_ads">
+                              
+                            </div>
+                        </div>
+                    </div>
+                    
+                        
+                        </div>
+                </div>
+
+        <!--********************************* APPROVISIONNEMENT PAGE  *******************************************************-->
+        <!-- ***************************************************************************************************** -->
+
+        <div data-id="appro_page" id="appro_page" class="page">
+                <div class="section">
+                    <div class="table_section">
+                        <div class="table_container shadow">
+                            <div class="table_container_header">
+                                <div class="table_main_title"> Gestion d'approvisionnement </div>
+                                <div class="add_btn">
+                                    <div id="add_appro" class="button_add primary_color"><i class="fas fa-cart-plus icon"></i>Ajouter un panier</div>
+                                </div>
+
+                            </div>
+                            <div class="filter_section">
+                                    
+                                    <div class="search"> 
+                                    <input type="text" id="appro_search_bar"  placeholder="Rechercher..." title="Type in a name">
+                                    </div>
+                                  </div>
+                            <div  class="appro table_head">
+                                <div id="table_title">Id </div>
+                                <div id="table_title"> Nom</div>
+                                <div id="table_title"> Date de création</div>
+                                <div id="table_title"> Statut</div>
+                                <div id="table_title"> Date de modification</div>
+                                <div id="table_title"> Actions</div>
+                            </div>
+                            <div id="table_body_appro">
+                              
+                            </div>
+                        </div>
+                    </div>
+                    
+                        
+                        </div>
+                </div>
+
+
+        <!--********************************* ORDER PAGE  *******************************************************-->
+        <!-- ***************************************************************************************************** -->
+       
+        <div data-id="order_page" id="order_page" class="page">
+                <div class="section">
+                    <div class="table_section">
+                        <div class="table_container shadow">
+                            <div class="table_container_header">
+                                <div class="table_main_title"> Commandes </div>
+                                <div class="download_section">
+                                
+                                        <div id="download_invoice" style="width:160px;" class="button_add primary_color">
+                                            <i class="fas fa-download icon"></i>Pdf</div>
+                                    
+                            
+                                        <div id="download_excel" style="width:160px;" class="button_add primary_color">
+                                            <i class="fas fa-download icon"></i>Excel</div>
+                                
+                                </div>
+                            </div>
+                            <div class="filter_section">
+                                    <!-- <select id="date-select-menu" >
+                                            <option selected value="recent" class="category-option">Les plus récents</option>
+                                            <option value="anciens" >Les plus anciens</option>
+                                            <option value="semaine">Il y a une semaine</option>
+                                            <option value="mois">Il y a un mois</option>
+                                            <option value="ans">Il y a un ans</option>
+                                          </select> -->
+                                          <div class="search">
+                                <select id="filter-select-menu" >
+                                    <option selected value="" class="category-option">Toutes les commandes</option>
+                                    <option value= "new" >Nouvelle Commande</option>
+                                    <option value="appected">Confirmée</option>
+                                    <option value="canceled">Annulée</option>
+                                    <option value="ready_pickup">Ready for pickup</option>
+                                    <option value="1er_tentative">1er tentative</option>
+                                    <option value="2eme_tentative">2eme tentative</option>
+                                    <option value="confirm_1er">Confirmée 1er tentative</option>
+                                    <option value="confirm_2eme">Confirmée 2eme tentative</option>
+                                    <option value="en_cours">En cours de livraison</option>
+                                    <option value="delivered">Livrée</option>
+                                    <option value="confirm_echang">Confirmée échange</option>
+                                    <option value="confirm_ajout">Confirmée ajout</option>
+                                    <option value="confirm_ajout_echange">Confirmée ajout+échange</option>
+                                    <option value="dans_panier">Dans panier</option>
+                                  </select>
+                                </div>
+                                  <div class="search">
+                                  <input type="text" id="orders_search_bar"  placeholder="Rechercher..." title="Type in a name">
+                                </div>
+                                </div>
+                            <div  class="order table_head">
+                                    <div id="table_title"> Id</div>
+                                    <div id="table_title" class="date_of_order"> Date de commande </div>
+                                <div id="table_title"> Nom client </div>
+                                <div id="table_title"> Wilaya </div>
+                                <div id="table_title"> Prix Commande</div>
+                                <div id="table_title"> Statut </div>
+                                <div id="table_title"> Derniére modification </div>
+                                <div id="table_title"> Actions</div>
+                            </div>
+                            <div id="table_body_order">
+                              
+                            </div>
+                        </div>
+                    </div>
+                    <table id ='download_orders'>
+                            <thead>
+                              <div class=" table_head">
+                                  <th><div id="table_title" style="width: 200px"> Nom complet</div></th>
+                                  <th><div id="table_title"> Téléphone 1 </div></th>
+                                  <th><div id="table_title"> Téléphone 2 </div></th>
+                                  <th><div id="table_title"> Produit </div></th>
+                                  <th><div id="table_title"> Quantité</div></th>
+                                  <th> <div id="table_title"> Adresse</div></th>
+                                  <th> <div id="table_title"> Wilaya (Nom)</div></th>
+                                  <th> <div id="table_title"> Commune (Nom)</div></th>
+                                  <th> <div id="table_title"> Total à ramasser</div></th>
+                                  <th> <div id="table_title"> Note</div></th>
+                              </div>
+                            </thead>
+                            <tbody class="table_orders">
+                            </tbody>
+                        </table>
+                        </div>
+        </div>
+
+
+
+
+
+        <!--********************************* Artisans PAGE  *******************************************************-->
+        <!-- ***************************************************************************************************** -->
+
+        <div data-id="artisans_page" id="artisans_page" class="page">
+            <div class="section">
+                <div class="table_section">
+                    <div class="table_container shadow">
+                        <div class="table_container_header">
+                            <div class="table_main_title"> Artisans </div>
+                            <div class="add_btn">
+                                <div id="add_artisan" class="button_add primary_color"> <i class="fas fa-plus icon"></i>Ajouter un profil</div>
+                            </div>
+
+                        </div>
+                        <div class="filter_section">
+                            <div class="search"> 
+                            <select id="filter-select-promo" >
+                                <option selected value="Tout" class="category-option">Tous les produits</option>
+                                <option value="0" >Pas en promo</option>
+                                <option value="1">En promo</option>
+                              </select></div>
+                              <div class="search"> 
+                              <input type="text" id="products_search_bar"  placeholder="Rechercher..." title="Type in a name">
+                              </div>
+                            </div>
+                        <div  class="artisans table_head">
+                            <div id="table_title"></div>
+                            <div id="table_title">Id</div>
+                            <div id="table_title"> Nom </div>
+                            <div id="table_title"> Prénom</div>
+                            <div id="table_title"> N° téléphone </div>
+                            <div id="table_title"> Adresse travail </div>
+                            <div id="table_title"> Experience </div>
+                            <div id="table_title"> Note</div>
+                            <div id="table_title"> Actions </div>
+                        </div>
+                        <div id="table_body_artisans">
+                          
+                        </div>
+                    </div>
+                </div>
+                
+                    
+                    </div>
+            </div>
+
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    </div>
+     <!--products_used menu -->
+     <div id="products_used_menu">
+            <div class="product_side_menu"><div class="title">Liste des produits</div> 
+            <input type="text" id="products_used_search_bar"  placeholder="Rechercher un produit"></div>
+            
+        
+            <div class="body_products_used_menu">
+              <div class="product_used_container">
+                
+      
+              </div>
+            </div>
+          </div>
+     <!--orders_used menu -->
+     <div id="orders_used_menu">
+            <div class="product_side_menu"><div class="title">Liste des commandes</div> 
+            <input type="text" id="orders_used_search_bar"  placeholder="Rechercher une commande"></div>
+            
+        
+            <div class="body_orders_used_menu">
+              <div class="order_used_container">
+                
+      
+              </div>
+            </div>
+          </div>
+
+    <div id="overlay"></div>
+    <div id="side_menu_add_container"></div>
+    <div class="modal_add"></div>
+    <div class="modal_details"><div class="modal-dialog_details"></div></div> 
+
+  <div class="container_expended">
+    <span class="closebtn">&times;</span>
+    <img id="expandedImg" style="widows: 70%">
+  </div>
+    
+    <!-- The success Modal -->
+    <div class="popup">
+            <div class="popup-content">
+                    <h5 class="message"></h3>
+                    <div class="history_table"></div>
+                        <div class="popup_footer">
+                            
+                            <div class="btn btn-outline-success ok" >
+                                <i class="far fa-check-circle"></i> Ok </div>
+
+                        </div>
+    </div>
+    </div>
+    <!-- History Modal -->
+    <div class="popup_hist">
+            <div class="popup_hist-content">
+                    
+                    <div class="history_table">
+                            <table class="table table-striped">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">id_commande</th>
+                                        <th scope="col">Statut</th>
+                                        <th scope="col">Date de modification</th>
+                                        <th scope="col">Par</th>                      
+                                        </tr>
+                                    </thead>
+                                    <tbody class="history_body"  >
+                                    
+                                    </tbody>
+                                  </table>
+                    </div>
+                        <div class="popup_footer">
+                            
+                            <div class="btn btn-outline-success ok" >
+                                <i class="far fa-check-circle"></i> Ok </div>
+
+                        </div>
+    </div>
+    </div>
+
+    <div id="connection_status" class="shadow raduis padding30 ">
+        <div class="block bold text_red title_bg"> Probléme de connexion à internet</div>
+        <div class="block subtitle_small"> Veuilliez vérifier votre connexion internet</div>
+    </div>
+    <div class="pdfnone"><div id="id_pdf"><div class="pdf"></div></div></div>
+    <div class="labelnone"><div id="label"><div  class="label">
+    </div></div></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
+    </script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" ></script>
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="../js/general_function.js"></script>
+    <script src="../js/admin.js"></script>
+</body>
+</html>

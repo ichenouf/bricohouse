@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:normal,bold');
+
+* { margin:0 ; padding:0 ; border:0 ; -webkit-appearance: none; font-family:'Roboto', sans-serif; box-sizing: border-box;}
+
+
+
+
+
+#card_container{
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    background-color: rgb(70, 70, 70);
+    place-items: center;
+    padding: 50% 0px;
+}
+
+
+.link{
+    width: 90%;
+    height: 60px;
+    border: solid 2px rgb(255, 255, 255);
+    display: grid;
+    place-items: center;
+    color: white;
+    font-size: 25px;
+    text-decoration: none;
+    border-radius:  5px;
+}

@@ -1,0 +1,66 @@
+
+
+
+* { margin:0 ; padding:0 ; border:0 ; -webkit-appearance: none; font-family:'Roboto', sans-serif; box-sizing: border-box;}
+
+
+
+
+/************************************  LOGIN PAGE   **************************************************************/
+/***********************************                          *************************************************************/
+
+#login_page{
+
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(22, 22, 22)
+}
+#login_page .title{margin-bottom: 20px}
+
+#background_login{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 30px;
+    
+    background-image: url("../img/james-kovin-YQGPSblLPz0-unsplash.jpg");
+
+
+}
+#background_login img{
+
+    width: 65%;
+
+    
+}
+#form_login{background-color: rgb(22, 22, 22);text-align: left;padding: 25px; display: grid; place-items: center; grid-template-rows: 1fr;}
+.form_login_container{
+    width: 100%;
+}
+
+#logo_img{
+    width: 25%;
+    position: absolute;
+    top:5%;
+    right: 3%;
+}
+.input_container{padding:10px;}
+.title{padding-left: 9px}
+.input_container input {color: rgb(109, 109, 109)!important;background: rgb(35, 35, 35)!important;height: 45px;width: 100%; outline: none; border:none;padding: 10px;}
+.input_container input:hover { 
+border-bottom-color: #1E56A0;
+}
+.button_container{display: grid;place-items: center;width: 100%;padding: 15px 10px; color: honeydew;}
+.button{width: 100%;border-radius: 0px!important;}
+
+@media screen and (min-width:200px) and (max-width:1024px){
+    #login_page{grid-template-columns: 1fr}
+    #background_login{display: none}
+    #logo_img{
+    width: 40% !important;
+
+    }
+}
