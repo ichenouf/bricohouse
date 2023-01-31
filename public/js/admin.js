@@ -2043,6 +2043,7 @@ upload_image(file, (e, res) => {
 });
 
 
+
 async function addProduct(){
   var image_name= GV.filelist
   var information = {
