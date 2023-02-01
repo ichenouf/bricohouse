@@ -322,7 +322,7 @@ function displayPromtedCategories(){
     <div class="boutique_section ">
       <div class="grid w100 colmn2 boutique_section_header" style="border-bottom: 1px solid #a7a4a0;"><h5 class="title_block text_color_1 light w100 text_left">selection ${element.category_name}</h5><div class="text_right bold see_more_products" style="padding: 20px;" data-category="${element.id}" data-subcat="">voir plus >> </div></div>
       <div id="grid_groupe_${i}"class="card_group_grid">
-        ddd
+      
       </div>
     </div>    
     `
@@ -334,7 +334,7 @@ function displayPromtedCategories(){
 }
 
 function displayProductsGrid(filters,$selector,limit){
-  let html="";
+  // let html="";
   var count=0
   for ( var id of Object.keys(GV.products)) {
       
@@ -345,10 +345,12 @@ function displayProductsGrid(filters,$selector,limit){
       var promo_percentage =  Math.trunc((100 - percentage)) 
       var category = GV.categories[product.id_category]
       if (!check_product_filters(product,filters)) continue;
+      if(product.quantity==0)continue
       count++
-      if(count>limit) return $($selector).html(html); 
+      if(count>limit) return 
+      console.log(count,category.category_name,product.product_name,'new')
       if(product.quantity > 0){
-      html += `
+      let html = `
       <div class="card_product test" data-id="${product.id}" data-price="${product.price}" data-cat="${product.id_category}" >
       <div class="badge_promo " style=${product.promo!=1 ? "display:none":""}></div>
       <div class="text_badge text_white" style=${product.promo!=1 ? "display:none":""}>-${promo_percentage}%</div> 
@@ -362,11 +364,11 @@ function displayProductsGrid(filters,$selector,limit){
           <div class="button_container add_to_cart"><div class="button_large ${product.promo!=1 ? "color2":"red"} "><div class=" bold text_white ">Ajouter au panier</div></div></div>
     </div>
      `
-           
+     $($selector).append(html); 
    
     }}
     console.log(count,limit)
-     $($selector).html(html); 
+    
 }
 
 
@@ -560,6 +562,14 @@ onClick('.see_more_products', function () {
 
   if(category)GV.selected_category_id=category
   if(sub_cat)GV.selected_sub_category_id=sub_cat
+
+  GV.page=1
+  funded_products=0
+
+  $(".cards_container2").html("")
+
+  displayProducts({category:$(this).data("category")})
+
   navigate_to('boutique_page')
 
 });
