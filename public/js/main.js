@@ -348,7 +348,7 @@ function displayProductsGrid(filters,$selector,limit){
       if(product.quantity==0)continue
       count++
       if(count>limit) return 
-      console.log(count,category.category_name,product.product_name,'new')
+      // console.log(count,category.category_name,product.product_name,'new')
       if(product.quantity > 0){
       let html = `
       <div class="card_product test" data-id="${product.id}" data-price="${product.price}" data-cat="${product.id_category}" >
@@ -358,7 +358,6 @@ function displayProductsGrid(filters,$selector,limit){
           <div class="w100">
             <div class="product_name bold">${product.product_name}</div>
             <div class="product_name">${category.category_name}</div>
-            <div class="product_name" style="color:rgb(238, 76, 64);${product.quantity>3?"display:none":""}">${product.quantity<3?`stock restant : ${product.quantity}`:""}</div>
           </div>
           <div class="product_price_section w100 bold" style=${product.promo!=1 ? "display:block":""}><div class=${product.promo!=1 ? "":"line-through pricetest"}>${product.price} DA</div><div style=${product.promo!=1 ? "display:none":"color:red"} >${product.promo_price} DA</div></div>
           <div class="button_container add_to_cart"><div class="button_large ${product.promo!=1 ? "color2":"red"} "><div class=" bold text_white ">Ajouter au panier</div></div></div>
@@ -516,7 +515,7 @@ function displayCategories() {
       if( sub_category_id==category_id ){
        
        let html=`<div class="dropdown_sub">${sub_category.sub_category_name}<div>`
-       let html2=`<div data-id="${sub_category.id}" class="sub_category_name_card">${sub_category.sub_category_name}<div>`
+       let html2=`<div data-id="${sub_category.id}" data-category="${category.id}" class="sub_category_name_card">${sub_category.sub_category_name}<div>`
 
        $(`#${category_id }`).append(html)
        $(`.sub_cat_${category_id}`).append(html2)
@@ -715,7 +714,9 @@ GV.initialize_page.boutique_page=async function(){
 
 
 onClick('#see_more',function(){
+
   GV.page=GV.page+1
+
   if(GV.selected_category_id && !GV.selected_sub_category_id){
     displayProducts({category:GV.selected_category_id},)
 
@@ -731,7 +732,15 @@ onClick('#see_more',function(){
   
 $(document).on("change", "#id_category", function() {
   var cat=$(this).val()
+  GV.page=1
+  funded_products=0
+  GV.selected_category_id=$(this).val()
+  window.history.pushState({}, "brico house", get_next_page_url("boutique_page"));
+  $(".cards_container2").html("")
+
   displayProducts({category:cat})
+
+
 });
 
 
@@ -774,39 +783,67 @@ const groupBy = (arr, key) => {
 
 function displayProducts(filters) {
   
-  
+  let currentIndex= GV.page * GV.increment; //10 puis 20 
+  if(currentIndex==10){
+    currentIndex=0
+  }
 
-  const res = groupBy(GV.products, "id_category");
-  console.log("group by:", res);
+  if(GV.selected_sub_category_id){
+    console.log(GV.selected_sub_category_id,"selected_subcategoy")
+    var res = groupBy(GV.products, "id_sub_category");
+    var limit_loop_product = res[filters.sub_category].length
+
+    if( currentIndex > limit_loop_product ){
+      limit_loop_product=20
+    }
+
+
+  }else if(GV.selected_category_id && !GV.selected_sub_category_id) {
+    var res = groupBy(GV.products, "id_category");
+
+    var limit_loop_product = res[filters.category].length
+
+  }else{
+    var limit_loop_product = GV.products.length
+
+  }
+  // console.log(limit_loop_product,"limit loop")
+
+  // console.log(res[filters.sub_category], "grouped_products")
   
 
   let  html =""
 
-  let currentIndex= GV.page * GV.increment; //10 puis 20 
-  console.log(currentIndex,GV.page,GV.increment)
-
-  for (var i = currentIndex; funded_products<(currentIndex+GV.increment) && i< GV.products.length ; i++) {
-
-    var product=Object.values(GV.products)[i];
-    console.log(currentIndex)
-
-    if(filters.category  && res[product.id_category].length==$(".cards_container2").find('.test').length){
-      console.log('ok')
-      return
-    } 
-
-
-    // console.log(Object.values(GV.products)[10])
 
 
 
-    // if(i==0)continue
-   
+  for (var i = currentIndex; funded_products<(currentIndex+GV.increment) && i< limit_loop_product ; i++) {
+
+    if (filters.category && !filters.sub_category){
+      var product=Object.values(res[filters.category])[i];
+     
+    
+
+    } else if (filters.sub_category) {
+      console.log("here i am")
+      var product=Object.values(res[filters.sub_category])[i];
+      console.log(product,"product", i, "index")
+      console.log(i,"index")
+      // console.log(res[filters.sub_category],"res")
 
 
-    // console.log(res[product.id_category].length,'sara')
-    // if(i> res[product.id_category].length )return
+    }else {
+      var product=Object.values(GV.products)[i];
 
+    }
+    
+    console.log(currentIndex, "current index")
+
+    // if(filters.category  && res[product.id_category].length==$(".cards_container2").find('.test').length){
+    //   console.log(res[product.id_category].length)
+    //   alert()
+    //   return
+    // } 
 
     if(!product) continue;
 
@@ -948,6 +985,7 @@ function sortProductsPrice(sortingMethod,$selector)
 onClick(".category_name_card, .dropdown_cat", function () {
   $(".category_name_card, .sub_category_name_card, .dropdown_cat").removeClass("selected")
   GV.selected_category_id=$(this).data('id')
+  GV.selected_sub_category_id=undefined
   window.history.pushState({}, "brico house", get_next_page_url("boutique_page"));
   $(this).addClass("selected")
 
@@ -973,6 +1011,7 @@ onClick(".dropdown_cat", function () {
 
 onClick(".sub_category_name_card", function () {
   $(".category_name_card, .sub_category_name_card").removeClass("selected")
+  GV.selected_category_id=$(this).data('category')
   GV.selected_sub_category_id=$(this).data('id')
   window.history.pushState({}, "brico house", get_next_page_url("boutique_page"));
   $(this).addClass("selected")
@@ -1105,7 +1144,6 @@ function displayDetailsProduct(id){
             <div class="item_body" data-id="${product.id}">
             <div class="item_body_title text_color_1 bold">${product.product_name}</div>
             <div class="item_body_subtitle pb_10">${category.category_name}--${sub_category.sub_category_name==undefined ? 'aucune sous-catégorie': sub_category.sub_category_name } </div>
-            <div class="item_body_subtitle pb_10" style="color:rgb(238, 76, 64);${product.quantity>3?"display:none":""}">${product.quantity<3?`stock restant : ${product.quantity}`:""}</div>
             <div id="product-price" class="item_body_subtitle price ">${get_product_price_html(product)}</div>
             <div class="item_body_subtitle product_description pb_10">${formated_description}</div>
             <div class="item_body_subtitle product_description_arabe pb_10">
