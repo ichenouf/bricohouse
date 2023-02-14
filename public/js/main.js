@@ -926,11 +926,14 @@ function displayProducts(filters) {
 // };
 
 function check_product_filters(product, filters){
- 
+
+
   if(!filters) filters={};
   if(filters.promo &&  product.promo !=filters.promo && filters.catgeory != product.id_category ) return false;
   if( filters.category && product.id_category != filters.category ) return false;
   if( filters.sub_category && product.id_sub_category != filters.sub_category ) return false;
+  if(filters.key && !product.product_name.toLowerCase().includes(filters.key)) return false;
+
   // if(product.id_category != filters.category) return false;
   return true;  
 }
@@ -938,9 +941,20 @@ function check_product_filters(product, filters){
 $(document).ready(function(){
   $("#products_search").on("keyup", function() {
     var value = $(this).val().toLowerCase();
-    $(".cards_container2 .card_product ").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
+    console.log(value)
+    if(value==""){
+    
+      $(".cards_container2").html("")
+    }else{
+      setTimeout(function(){
+        display_finded_products({key:value})
+    }, 3000);
+  
+    } 
+  
+    // $(".cards_container2 .card_product ").filter(function() {
+    //   $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    // });
   });
 });
 
@@ -950,6 +964,46 @@ $('#filter-promo').on('change', async function(){
 
 });
 
+
+function display_finded_products(filters){
+
+  $(".cards_container2").html("")
+  let html=""
+
+for ( let product of Object.values(GV.products)){
+
+  var percentage = (100 * product.promo_price) / product.price;
+  var promo_percentage = Math.trunc((100 - percentage)) 
+  let category = GV.categories[product.id_category]
+
+  if(!check_product_filters(product, filters)) continue;
+
+  funded_products = funded_products+1
+
+
+  if(product.quantity > 0){
+    html += `
+  <div class="card_product test" data-id="${product.id}" data-price="${product.price}" data-cat="${product.id_category}" >
+    <div class="badge_promo " style=${product.promo!=1 ? "display:none":""}></div>
+    <div class="text_badge text_white" style=${product.promo!=1 ? "display:none":""}>-${promo_percentage}%</div> 
+        <div class="image_container" data-id="${product.id}"><img src="/img/uploads/${product.images[0]}"</img></div>
+        <div class="w100">
+          <div class="product_name bold">${product.product_name}</div>
+          <div class="product_name">${category.category_name}</div>
+          
+        </div>
+        <div class="product_price_section  w100 bold" style=${product.promo!=1 ? "display:block":""}><div class=${product.promo!=1 ? "":"line-through pricetest"}>${product.price} DA</div><div style=${product.promo!=1 ? "display:none":"color:red"} >${product.promo_price} DA</div></div>
+        <div class="button_container add_to_cart"><div class="button_large ${product.promo!=1 ? "color2":"red"} "><div class=" bold text_white ">Ajouter au panier</div></div></div>
+        
+  </div>
+  `
+
+  }
+ 
+  }
+  $(".cards_container2").html(html)
+
+}
 
 $(document).on("change", ".price-sorting", function() {
 
