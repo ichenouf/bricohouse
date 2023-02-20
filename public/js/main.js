@@ -1152,9 +1152,7 @@ GV.initialize_page.product_page=async function(){
 
 onClick('.plus',function(){
   var val=parseInt($('.qty').val())
-
   var newVal= val+1
-
   $('.qty').val(newVal)
 });
 
@@ -1164,6 +1162,32 @@ onClick('.minus',function(){
   var newVal= val-1
   $('.qty').val(newVal)
 });
+
+
+onClick('.qtyplus',function(){
+  var val=parseInt($('.qty_cart').val())
+  var newVal= val+1
+  let product_id=$(this).data("id")
+
+  $(`.qty_cart[data-id="${product_id}"]`).val(newVal)
+  console.log(GV.cart[product_id],product_id)
+  GV.cart[product_id].quantity=newVal
+
+
+});
+
+onClick('.qtyminus',function(){
+  var val=parseInt($('.qty_cart').val())
+  if(val==1)return
+  var newVal= val-1
+  let product_id=$(this).data("id")
+
+  $(`.qty_cart[data-id="${product_id}"]`).val(newVal)
+
+  GV.cart[product_id].quantity=newVal
+
+});
+
 
 function displayDetailsProduct(id){
  
@@ -1400,7 +1424,11 @@ onClick (".card_product .add_to_cart", function(e){
                       <div class="cart_product_subtitle price"> ${get_product_price_html(product, cart_element.quantity)}</div>
                   </div>
                   
-                  <div> x ${cart_element.quantity}</div>
+                  <form id='myform' class='quantity'>
+                    <input type='button' value='-' class='qtyminus' field='quantity' data-id="${product.id}" />
+                    <input type='text' name='quantity' value='${cart_element.quantity}' class='qty_cart' data-id="${product.id}"/>
+                    <input type='button' value='+' class='qtyplus' field='quantity' data-id="${product.id}"  />
+                  </form>
                   <div class="cart_product_icon grid center"><i class="fas fa-times delete_icon" data-id="${product.id}" style="width:100%;height:100%"></i></div>
                 </div>
                 `

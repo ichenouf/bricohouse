@@ -1205,7 +1205,7 @@
 .header_cart .title {font-size: 18px;font-weight:600; text-align: center;}
 .footer_cart{background-color: white; border-top: 1px solid rgba(231, 231, 231, 0.8);box-shadow:1px 1px 10px rgba(180, 180, 180, 0.4) ;}
 
-.cart_product_container{display: grid;grid-template-columns: 0.5fr 1.3fr 0.3fr 0.3fr;margin-top: 30px;}
+.cart_product_container{display: grid;grid-template-columns: 0.5fr 1.3fr 0.9fr 0.2fr;margin-top: 30px;}
 .cart_product_img{width: 80px; margin-left: 11px;}
 .cart_product_informations{padding-left: 10px;}
 .cart_product_img img {width: 100%;object-fit: cover;}
@@ -1224,6 +1224,20 @@
 .total{font-size: 18px;font-weight: 600;color: rgb(31, 32, 32);}
 .delivery{color:rgb(96, 97, 97) }
 .sous_total{color:rgb(96, 97, 97) }
+
+
+
+
+#myform {
+    text-align: center;
+}
+.qty_cart {
+    width: 40px;
+    height: 25px;
+    text-align: center;
+}
+input.qtyplus { width:25px; height:25px;}
+input.qtyminus { width:25px; height:25px;}
 
 /************************************  FORMULAIRE **************************************************************/
 /***********************************            *************************************************************/
